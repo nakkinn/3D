@@ -39,6 +39,9 @@ function draw(){
         }
     }
 
+    if(mouseIsPressed==false){
+        theta*=0.99;
+    }
 }
 
 function mouseDragged(){
