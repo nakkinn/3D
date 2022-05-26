@@ -31,7 +31,7 @@ function draw(){
         for(let i=0;i<vts.length;i++){
             let v=createVector(vts[i][0],vts[i][1],vts[i][2]);
             theta=constrain(theta,0,0.1);
-            v=rot(v,n,theta);
+            v=rot(v,n,theta*deltaTime*0.02);
             vts[i][0]=v.x;
             vts[i][1]=v.y;
             vts[i][2]=v.z;
@@ -53,7 +53,7 @@ function mouseDragged(){
     
         v=v.set(vts[i][0],vts[i][1],vts[i][2]);
         
-        v=rot(v,n,theta);
+        v=rot(v,n,theta*deltaTime*0.02);
         vts[i][0]=v.x;
         vts[i][1]=v.y;
         vts[i][2]=v.z;
