@@ -1,3 +1,9 @@
+function disableScroll(event) {
+    event.preventDefault();
+}
+  
+document.addEventListener('touchmove', disableScroll, { passive: false });
+
 let n;
 let p=
 [
@@ -20,7 +26,7 @@ function setup(){
 
 function draw(){
     background(20);
-    orbitControl();
+    orbitControl(10,10);
 
     /*let angle=atan2(mouseY-height/2,mouseX-width/2);
     n.x=cos(angle);
