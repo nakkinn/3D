@@ -4,20 +4,9 @@ function disableScroll(event) {
   
 document.addEventListener('touchmove', disableScroll, { passive: false });
 
-let n;
-let p=
-[
-    [ [-1,-1,-1],[-1,-1, 1],[ 1,-1, 1],[ 1,-1,-1] ],
-    [ [-1, 1,-1],[-1, 1, 1],[ 1, 1, 1],[ 1, 1,-1] ],
-    [ [-1,-1,-1],[-1,-1, 1],[-1, 1, 1],[-1, 1,-1] ],
-    [ [ 1,-1,-1],[ 1,-1, 1],[ 1, 1, 1],[ 1, 1,-1] ],
-    [ [-1,-1,-1],[-1, 1,-1],[ 1, 1,-1],[ 1,-1,-1] ],
-    [ [-1,-1, 1],[-1, 1, 1],[ 1, 1, 1],[ 1,-1, 1] ]
-];
-
-
-let c=['#555555','#ff4500','#b0c4de','#ffff00','#32cd32','#8b008b'];
-let num=0,theta=0;
+let vts=[[0., 4.23607, 1.61803], [0., 4.23607, -1.61803], [2.61803, 2.61803, 2.61803], [2.61803, 2.61803, -2.61803], [4.23607, 1.61803, 0.], [0., -4.23607, -1.61803], [0., -4.23607, 1.61803], [2.61803, -2.61803, -2.61803], [2.61803, -2.61803, 2.61803], [4.23607, -1.61803, 0.], [-2.61803, -2.61803, -2.61803], [-2.61803, -2.61803, 2.61803], [-4.23607, -1.61803, 0.], [-2.61803, 2.61803, 2.61803], [-2.61803, 2.61803, -2.61803], [-4.23607, 1.61803, 0.], [1.61803, 0., 4.23607], [-1.61803, 0., 4.23607], [-1.61803, 0., -4.23607], [1.61803, 0., -4.23607]];
+let faces=[[3, 5, 10, 9, 17], [4, 5, 10, 8, 20], [1, 2, 4, 5, 3], [6, 7, 9, 10, 8], [1, 3, 17, 18, 14], [2, 4, 20, 19, 15], [7, 9, 17, 18, 12], [6, 8, 20, 19, 11], [1, 2, 15, 16, 14], [6, 7, 12, 13, 11], [12, 13, 16, 14, 18], [11, 13, 16, 15, 19]];
+let theta=0,n;
 
 function setup(){
     createCanvas(windowWidth,windowHeight,WEBGL);
@@ -25,47 +14,31 @@ function setup(){
 }
 
 function draw(){
-    background(20);
-    //orbitControl(10,10);
+    background(50);
 
-    scale(60);
-    
+    scale(40);
 
-    for(let i=0;i<p.length;i++){
-        
-        if(mouseIsPressed==false){
-            let v=createVector(0,0,0);
-            for(let j=0;j<4;j++){
-                v=v.set(p[i][j][0],p[i][j][1],p[i][j][2]);
-                theta=constrain(theta,0,0.1);
-                v=rot(v,n,theta);
-                p[i][j][0]=v.x;
-                p[i][j][1]=v.y;
-                p[i][j][2]=v.z;
-            }
-
+    for(let i=0;i<faces.length;i++){
+        beginShape();
+        for(let j=0;j<faces[i].length;j++){
+            vertex(vts[faces[i][j]-1][0],vts[faces[i][j]-1][1],vts[faces[i][j]-1][2]);
         }
-
-
-        if(i<p.length-num){
-            fill(c[i]);
-            beginShape();
-            for(let j=0;j<4;j++)    vertex(p[i][j][0],p[i][j][1],p[i][j][2]);
-            endShape(CLOSE);
-        }
+        endShape(CLOSE);
     }
-
     
+
     if(mouseIsPressed==false){
-        //line(-3*n.x,-3*n.y,-3*n.z,3*n.x,3*n.y,3*n.z);
-        theta*=0.99;
+        for(let i=0;i<vts.length;i++){
+            let v=createVector(vts[i][0],vts[i][1],vts[i][2]);
+            theta=constrain(theta,0,0.1);
+            v=rot(v,n,theta);
+            vts[i][0]=v.x;
+            vts[i][1]=v.y;
+            vts[i][2]=v.z;
+        }
     }
+
     
-
-}
-
-function mousePressed(){
-    theta=0;
 }
 
 function mouseDragged(){
@@ -75,23 +48,17 @@ function mouseDragged(){
     n.x=cos(angle);
     n.y=sin(angle);
 
-    for(let i=0;i<p.length;i++){
+    for(let i=0;i<vts.length;i++){
         let v=createVector(0,0,0);
-        for(let j=0;j<4;j++){
-            v=v.set(p[i][j][0],p[i][j][1],p[i][j][2]);
-            
-            v=rot(v,n,theta);
-            p[i][j][0]=v.x;
-            p[i][j][1]=v.y;
-            p[i][j][2]=v.z;
-        }    
-    }
-}
-
-function mouseWheel(event){
-    if(event.delta>0)   num++;
-    else    num--;
-    num=constrain(num,0,6);
+    
+        v=v.set(vts[i][0],vts[i][1],vts[i][2]);
+        
+        v=rot(v,n,theta);
+        vts[i][0]=v.x;
+        vts[i][1]=v.y;
+        vts[i][2]=v.z;
+    }    
+    
 }
 
 function rot(v,n,theta){
@@ -106,4 +73,3 @@ function rot(v,n,theta){
     let result=createVector(x,y,z);
     return result;
 }
-
