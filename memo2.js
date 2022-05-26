@@ -25,7 +25,7 @@ function setup(){
 }
 
 function draw(){
-    background(20);
+    background(100);
     orbitControl(10,10);
 
     /*let angle=atan2(mouseY-height/2,mouseX-width/2);
