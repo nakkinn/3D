@@ -27,11 +27,11 @@ function draw(){
     n.y=sin(angle);*/
 
     scale(60);
-
+    
 
     for(let i=0;i<p.length;i++){
         
-        if(mouseIsPressed==false){
+        /*if(mouseIsPressed==false){
             let v=createVector(0,0,0);
             for(let j=0;j<4;j++){
                 v=v.set(p[i][j][0],p[i][j][1],p[i][j][2]);
@@ -42,7 +42,7 @@ function draw(){
                 p[i][j][2]=v.z;
             }
 
-        }
+        }*/
 
 
         if(i<p.length-num){
@@ -53,14 +53,15 @@ function draw(){
         }
     }
 
+    /*
     if(mouseIsPressed==false){
         //line(-3*n.x,-3*n.y,-3*n.z,3*n.x,3*n.y,3*n.z);
         theta*=0.99;
-    }
+    }*/
     
 
 }
-
+/*
 function mousePressed(){
     theta=0;
 }
@@ -102,5 +103,5 @@ function rot(v,n,theta){
 
     let result=createVector(x,y,z);
     return result;
-}
+}*/
 
