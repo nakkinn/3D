@@ -18,12 +18,14 @@ function request_permission(){
 
 function setup(){
     createCanvas(windowWidth,windowHeight);
-    request_permission();
+    
 }
 
 function draw(){
-    background(0);
+    background(100);
 
-    fill(255);
+}
 
+function mouseClicked(){
+    request_permission();   
 }
